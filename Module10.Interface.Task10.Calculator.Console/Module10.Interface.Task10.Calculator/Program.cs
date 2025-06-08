@@ -1,11 +1,10 @@
-﻿namespace Module10.Interface.Task10.Calculator
+﻿namespace Module10.Interface.Task10
 {
     public class Program
     {
-        static ILogger Logger { get; set; }
         static void Main(string[] args)
-        {            
-            Logger = new Logger();
+        {
+            ILogger Logger = new Logger();
             ICalculator summatorFirst = new Summator(Logger);
             double numberOne;
             double numberTwo;
@@ -28,53 +27,7 @@
             {
                 Logger.Error($"Ошибка: {ex.Message}");
             }
-
-
             Console.ReadKey();
-        }
-    }
-
-    public interface ICalculator
-    {
-        public double Solve(double numberOne, double numberTwo);
-    }
-
-    public class Summator : ICalculator
-    {
-        ILogger Logger { get; }
-        public Summator(ILogger logger)
-        {
-            Logger = logger;
-        }
-        double ICalculator.Solve(double numberOne, double numberTwo)
-        {            
-            double sumResult = numberOne + numberTwo;
-            Logger.Event($"Результат сложения {numberOne} + {numberTwo} = {sumResult}");
-            return (numberOne + numberTwo);
-        }
-    }
-
-    public interface ILogger
-    {
-        void Event(string message);
-        void Error(string message);
-    }
-
-    public class Logger : ILogger
-    {
-        void ILogger.Error(string message)
-        {
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
-        void ILogger.Event(string message)
-        {
-            Console.BackgroundColor = ConsoleColor.Blue;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(message);
-            Console.ResetColor();
         }
     }
 }
